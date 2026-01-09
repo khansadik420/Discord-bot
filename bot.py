@@ -3,7 +3,7 @@ from discord.ext import commands
 import os
 
 intents = discord.Intents.default()
-intents.message_content = True
+intents.message_content = True  # important
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -15,5 +15,9 @@ async def on_ready():
 async def ping(ctx):
     await ctx.send("Pong!")
 
-bot.run(os.getenv("TOKEN"))
+token = os.getenv("TOKEN")
 
+if not token:
+    raise ValueError("TOKEN environment variable not set")
+
+bot.run(token)
